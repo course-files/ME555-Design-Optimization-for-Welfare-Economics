@@ -8,5 +8,5 @@
 | **Semester Duration**                                                 | 10<sup>th</sup> January 2024 to 29<sup>th</sup> April 2024 (Winter 2024)                                                                                                                       |
 | **Team Members**                                                          | Peter Oketta, Ameria Nakiboneka, Kobina Adu, and Allan Omondi                                                                                                                                                                       |
 
-## Relationships between Subsystems
+## Relationship between Subsystems
 ![System Flow Diagram](https://github.com/course-files/ME555-Design-Optimization-for-Welfare-Economics/assets/137632706/abb835a2-1a4c-49c5-a978-5ee558e3f0ab)
