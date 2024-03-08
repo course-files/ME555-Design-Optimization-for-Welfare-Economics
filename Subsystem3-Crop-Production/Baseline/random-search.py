@@ -17,15 +17,14 @@ import math
 import statistics
 import numpy as np
 
-
 # ==== Objective Function ====
 def objective(r, cw, t, ce, qs_stddev, qs, qd, mal, tal):
     return (1 * (r ** -1.0) - 1 * (1 * (math.sin(cw / t)) + 1 * (ce)) +
-            1 * (qs_stddev) + 1 * (qd) + 1 * (qs - qd) +
+            (qs_stddev) ** 2 + 1 * (qd) + 1 * (qs - qd) +
             1 * (mal ** -1) - 1 * (tal ** -1))
 
 
-# ==== Constraints ====
+# ==== Constraint Bounds ====
 # TODO: Identify correct constraints through data collection
 # For small-scale farmers
 r_min, r_max = 0.0, 25000.0
@@ -35,6 +34,24 @@ qs_min, qs_max = 0.0, 2500.0
 qd_min, qd_max = 0.0, 2500.0
 mal_min, mal_max = 800.0, 1500.0
 tal_min, tal_max = 1000.0, 15000.0
+
+
+# ==== Constraint Functions ====
+# g1: c(tal) - r <= 0
+def g1(tal, r):
+    return tal - r
+
+
+# g2: 1 * (1 * (math.sin(cw / t)) + 1 * (ce)) - r <= 0
+def g2(cw, ce, t, r):
+    return ((math.sin(cw / t)) + 1 * (ce)) - r
+
+
+# Compile the constraints in the format scipy.optimize.minimize expects
+constraints = [
+    {'type': 'ineq', 'fun': g1},
+    {'type': 'ineq', 'fun': g2}
+]
 
 # ==== Parameters ====
 t = 3
