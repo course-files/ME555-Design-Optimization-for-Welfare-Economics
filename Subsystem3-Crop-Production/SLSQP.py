@@ -1,3 +1,13 @@
+# **********************************************************************
+# Function Optimization using SLSQP ----
+# SLSQP stands for Sequential Least Squares Programming
+#
+# Course Code: ME555
+# Course Name: Design Optimization
+# University of Michigan
+# Semester Duration: 10th Jan 2024 to 29th April 2024
+# 
+# **********************************************************************
 import math
 import numpy as np
 from scipy.optimize import minimize
@@ -50,6 +60,7 @@ init = [2362.2061, 3776.6741, 3, 8548.9602, 669.9823, 191.6636, 946.5487, 1272.7
 result = minimize(objective, init, method='SLSQP', bounds=bounds, constraints=constraints)
 
 # ==== Print the Result ====
-print("Result:")
-print(f"Solution: {result.x}")
-print(f"Objective value: {result.fun}")
+print("\n***Result***")
+formatted_numbers = [f"{num:.2f}" for num in result.x]
+print("Solution: ",formatted_numbers)
+print(f"\nObjective value: {result.fun: .2f}")
