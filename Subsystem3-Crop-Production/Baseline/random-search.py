@@ -83,6 +83,9 @@ range_space = np.array([objective(r, cw, t, ce, qs_stddev, qs, qd, mal, tal)
 optimum_index = np.argmin(range_space)
 
 # ==== Print the Result ====
+# To get the random search output in CSV format (manual runs)
+# print('%.4f, %.4f, %.4f, %.4f, %.4f, %.4f, '
+#       '%.4f, %.4f, %.4f' %
 print('Optimum: f(r=%.4f, cw=%.4f, ce=%.4f, qs_stddev=%.4f, qs=%.4f, qd=%.4f, '
       'mal=%.4f, tal=%.4f) = %.4f' %
       (r_design_space[optimum_index], cw_design_space[optimum_index], 
