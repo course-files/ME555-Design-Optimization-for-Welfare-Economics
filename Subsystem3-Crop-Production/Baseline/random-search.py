@@ -19,7 +19,7 @@ import numpy as np
 
 # ==== Objective Function ====
 def objective(r, cw, t, ce, qs_stddev, qs, qd, mal, tal):
-    return (1 * (r ** -1.0) - 1 * (1 * (math.sin(cw / t)) + 1 * (ce)) +
+    return (1 * (r ** -1.0) - 1 * (1 * (math.sin(cw / t)) ** 2/3 * 1 * (ce) ** 1/3) +
             (qs_stddev) ** 2 + 1 * (qd) + 1 * (qs - qd) +
             1 * (mal ** -1) - 1 * (tal ** -1))
 
