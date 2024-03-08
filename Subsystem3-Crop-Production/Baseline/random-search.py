@@ -3,8 +3,8 @@
 #
 # Course Code: ME555
 # Course Name: Design Optimization
-# University of Michigan
 # Semester Duration: 10th Jan 2024 to 29th April 2024
+# University of Michigan
 # 
 ## Purpose: ----
 # Perform function optimization using a random search (a naive optimization
@@ -12,28 +12,36 @@
 # of comparison for more sophisticated optimization algorithms.
 # **********************************************************************
 
-from numpy.random import rand
+import math
+import numpy as np
 
 
 # Objective Function
-def objective(x):
-    return x ** 2.0
+def objective(r, cw, T):
+    return r ** -1.0 - math.sin(cw / T)
 
 
 # Constraints
-x_min, x_max = -5.0, 5.0
+r_min, r_max = 0.0, 25000.0
+cw_min, cw_max = 400.0, 5000.0
+
+# Parameters
+T = 3
 
 # Design Space
-sample = x_min + rand(100) * (x_max - x_min)
+# Generate random samples within the design space
+r_design_space = r_min + np.random.rand(100) * (r_max - r_min)
+cw_design_space = cw_min + np.random.rand(100) * (cw_max - cw_min)
 
 # Range Space
-sample_eval = objective(sample)
+# Evaluate the objective function for each sample
+range_space = np.array([objective(r, cw, T) 
+                        for r, cw in zip(r_design_space, cw_design_space)])
 
-# Minimum Value in Range Space
-optimum_ix = 0
-for i in range(len(sample)):
-    if sample_eval[i] < sample_eval[optimum_ix]:
-        optimum_ix = i
+# Identify the index of the optimum result
+optimum_index = np.argmin(range_space)
 
 # Print the Result
-print('Optimum: f(%.5f) = %.5f' % (sample[optimum_ix], sample_eval[optimum_ix]))
+print('Optimum: f(r=%.5f, cw=%.5f) = %.5f' % 
+      (r_design_space[optimum_index], cw_design_space[optimum_index], 
+       range_space[optimum_index]))
