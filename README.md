@@ -11,4 +11,5 @@
 | **Team Members**                                                          | Peter Oketta, Ameria Nakiboneka, Kobina Adu, and Allan Omondi                                                                                                                                                                       |
 
 ## Relationship between Subsystems
-![System Flow Diagram](https://github.com/course-files/ME555-Design-Optimization-for-Welfare-Economics/assets/137632706/abb835a2-1a4c-49c5-a978-5ee558e3f0ab)
+![System Flow Diagram](https://github.com/course-files/ME555-Design-Optimization-for-Welfare-Economics/assets/137632706/8606e249-c391-40bc-b9ed-d4544a7ed7ea)
+
