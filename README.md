@@ -1,4 +1,5 @@
-#  Design Optimization for Welfare Economics
+#  Application of Design Optimization in the Welfare Economics of Rural Agricultural-Based Communities
+## A Case Study of Siaya County, Kenya
 
 | Key                                                               | Value                                                                                                                                                                              |
 |---------------|---------------------------------------------------------|
