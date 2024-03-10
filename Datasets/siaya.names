@@ -1,0 +1,12 @@
+==== Production ====
+1 bag of maize is 90 Kg. The approximate production per category of farmer is:
+Small-scale farmer: 8-12 bags per acre = 720-1080 Kg
+Medium-scale farmer: 10-25 bags per acre = 900-2250 Kg
+Large-scale farmer: 30-40 bags per acre = 2700-3600 Kg
+
+==== Prices (KES) ====
+Green maize prices in Siaya has 74 observations in 2023 January 7th to 2023 November 30th (Min: 34.90, Max: 150, Avg: 67.56)
+Dry maize prices in Siaya has 146 observations from 2023 July 1st to 2024 March 4th (Min: 46.15, Max: 140, Avg:64.86)
+
+=== Supply Volume (Kg) ===
+Dry maize in Siaya has 127 observations from 2023 July 1st to 2024 March 4th (Min: 550, Max:72000, Avg:8051.18)
