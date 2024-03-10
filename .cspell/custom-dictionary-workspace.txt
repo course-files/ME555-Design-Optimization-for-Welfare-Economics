@@ -1,3 +1,5 @@
 # Custom Dictionary Words
 argmin
 ineq
+pylab
+SLSQP
