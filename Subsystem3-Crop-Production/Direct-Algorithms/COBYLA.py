@@ -83,4 +83,7 @@ opt.set_maxeval(1000)
 x_opt = opt.optimize([1, 400, 3, 300, 1, 1, 1, 800, 1])
 min_f = opt.last_optimum_value()
 
-print(f"Optimal solution found: {x_opt}, with minimum value: {min_f}")
+# print(f"Optimal solution found: {x_opt}, with minimum value: {min_f}")
+
+x_opt_formatted = ", ".join([f"{x:.2f}" for x in x_opt])
+print(f"Optimal solution found: [{x_opt_formatted}], with minimum value: {min_f:.2f}")
