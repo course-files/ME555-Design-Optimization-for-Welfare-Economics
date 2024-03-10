@@ -1,5 +1,7 @@
 # Custom Dictionary Words
 argmin
+COBYLA
 ineq
+nlopt
 pylab
 SLSQP
