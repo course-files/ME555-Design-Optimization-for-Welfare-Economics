@@ -4,4 +4,5 @@ COBYLA
 ineq
 nlopt
 pylab
+Siaya
 SLSQP
