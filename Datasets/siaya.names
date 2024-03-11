@@ -1,12 +1,41 @@
-==== Production ====
+==== Production (Yield per Acre) ====
 1 bag of maize is 90 Kg. The approximate production per category of farmer is:
 Small-scale farmer: 8-12 bags per acre = 720-1080 Kg
 Medium-scale farmer: 10-25 bags per acre = 900-2250 Kg
 Large-scale farmer: 30-40 bags per acre = 2700-3600 Kg
 
 ==== Prices (KES) ====
-Green maize prices in Siaya has 74 observations in 2023 January 7th to 2023 November 30th (Min: 34.90, Max: 150, Avg: 67.56)
 Dry maize prices in Siaya has 146 observations from 2023 July 1st to 2024 March 4th (Min: 46.15, Max: 140, Avg:64.86)
+Green maize prices in Siaya has 74 observations in 2023 January 7th to 2023 November 30th (Min: 34.90, Max: 150, Avg: 67.56)
 
-=== Supply Volume (Kg) ===
+==== Gross Revenue (KES) ====
+1 bag of maize is 90 Kg. 1 Kg of Dry Maize is Avg: 64.86 (the average selling price between 2023 July 1st to 2024 March 4th). The approximate revenue per category of farmer is therefore:
+Small-scale farmer: 8-12 bags per acre = 720-1080 Kg = 46700-70049 KES
+Medium-scale farmer: 10-25 bags per acre = 900-2250 Kg = 58374-145935 KES
+Large-scale farmer: 30-40 bags per acre = 2700-3600 Kg = 175122-233496 KES
+
+==== Cost of Production (KES) ====
+==== Small-Scale Farmers ====
+Cost of Water: Minimal to KES 5,000, mainly if they collect rainwater but may invest in simple irrigation tools.
+Cost of Energy: KES 2,000 to KES 10,000, primarily for those using diesel pumps for irrigation.
+Cost of Technology Adoption: KES 5,000 to KES 20,000, on improved seeds, basic farm tools, and perhaps small-scale pest and disease control measures.
+
+==== Medium-Scale Farmers ====
+Cost of Water: KES 10,000 to KES 30,000 for those investing in irrigation systems like sprinklers or small-scale drip systems, including the cost of water extraction and distribution.
+Cost of Energy: KES 15,000 to KES 50,000, factoring in diesel for tractors and irrigation pumps.
+Cost of Technology Adoption: KES 20,000 to KES 100,000, including costs for improved seeds, minor mechanization, and moderate irrigation systems.
+
+==== Large-Scale Farmers ====
+Cost of Water: KES 50,000 to KES 200,000, for advanced irrigation systems and significant water usage.
+Cost of Energy: KES 100,000 to KES 500,000, for extensive use of mechanized equipment and irrigation systems.
+Cost of Technology Adoption: KES 200,000 to over KES 1,000,000, for high-tech farming solutions, precision agriculture, advanced seeds, and extensive mechanization.
+
+==== Supply Volume (Kg) ===
 Dry maize in Siaya has 127 observations from 2023 July 1st to 2024 March 4th (Min: 550, Max:72000, Avg:8051.18)
+
+==== Seasons ====
+1. Long Rains Season: Planting usually begins around March to May, when the long rains start. This is the primary season for maize farming in Siaya county. The harvesting for this season typically occurs from August to October, depending on the onset of the rains, the maize variety planted, and local climatic conditions.
+
+2. Short Rains Season: There's a secondary, shorter rainy season that allows for another cycle of maize planting, usually from October to December. The harvest for crops planted during this season would then be expected around February to March of the following year.
+
+Dry maize takes approximately 5 months from planting to harvesting.
