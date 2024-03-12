@@ -32,7 +32,7 @@ data <- read.csv(url)
 # Medium-Scale farmers only: data <- data[1001:2000,]
 
 # Large-Scale farmers only:
-data <- data[2001:3000,]
+data <- data[2001:3000, ]
 
 
 # Check the first few rows of the dataset
@@ -60,7 +60,8 @@ model <- nlsLM(mal ~ (alpha * (r ^ -1.0) - beta * ((sin(cw / tw)) * (ce)) +
 summary(model)
 
 # Plot the Residuals ----
-plot(residuals(model), type = 'p', main = "Residuals of the Model for Large-Scale Farmers",
+plot(residuals(model), type = "p",
+     main = "Residuals of the Model for Large-Scale Farmers",
      xlab = "Fitted Values", ylab = "Residuals")
 abline(h = 0, col = "red")
 
