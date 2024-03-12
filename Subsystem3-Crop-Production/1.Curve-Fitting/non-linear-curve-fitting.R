@@ -40,17 +40,17 @@ head(data)
 
 # Set the Initialization and Bounds ----
 start_vector <- c(alpha = 1, beta = 1, gamma = 1, theta = 1, tau = 1,
-                  kappa = 1, lambda_ = 1, epsilon = 1)
+                  kappa = 1, epsilon = 1)
 lower_bounds <- c(alpha = -1000, beta = -1000, gamma = -1000, theta = -1000,
-                  tau = -1000, kappa = -1000, lambda_ = -1000, epsilon = -1000)
+                  tau = -1000, kappa = -1000, epsilon = -1000)
 upper_bounds <- c(alpha = 1000, beta = 1000, gamma = 1000, theta = 1000,
-                  tau = 1000, kappa = 1000, lambda_ = 1000, epsilon = 1000)
+                  tau = 1000, kappa = 1000, epsilon = 1000)
 
 # Fit the Non-Linear Model using the Levenberg-Marquardt (LM) Method ----
 model <- nlsLM(mal ~ (alpha * (r ^ -1.0) - beta * ((sin(cw / tw)) * (ce)) +
                         (qs_stddev) ^ gamma + theta * (qd) ^ -1.0 +
                         tau * ((sin(qs / ts)) - qd) -
-                        kappa * (tal ^ -1) + lambda_ * (mal ^ -1.0) + epsilon),
+                        kappa * (tal ^ -1) + epsilon),
                data = data,
                start = start_vector,
                lower = lower_bounds,
