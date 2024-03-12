@@ -2,7 +2,12 @@
 argmin
 COBYLA
 ineq
+Levenberg
+Marquardt
 nlopt
 pylab
+RMSE
 Siaya
 SLSQP
+stddev
+xlab
