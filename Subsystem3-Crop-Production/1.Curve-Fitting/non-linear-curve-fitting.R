@@ -27,16 +27,24 @@ url <- "https://raw.githubusercontent.com/course-files/ME555-Design-Optimization
 # Load the dataset from the URL
 data <- read.csv(url)
 
+# Small-Scale farmers only: data <- data[1:1000, ]
+
+# Medium-Scale farmers only: data <- data[1001:2000,]
+
+# Large-Scale farmers only:
+data <- data[2001:3000,]
+
+
 # Check the first few rows of the dataset
 head(data)
 
 # Set the Initialization and Bounds ----
 start_vector <- c(alpha = 1, beta = 1, gamma = 1, theta = 1, tau = 1,
                   kappa = 1, lambda_ = 1, epsilon = 1)
-lower_bounds <- c(alpha = -100, beta = -100, gamma = -100, theta = -100,
-                  tau = -100, kappa = -100, lambda_ = -100, epsilon = -100)
-upper_bounds <- c(alpha = 100, beta = 100, gamma = 100, theta = 100,
-                  tau = 100, kappa = 100, lambda_ = 100, epsilon = 100)
+lower_bounds <- c(alpha = -1000, beta = -1000, gamma = -1000, theta = -1000,
+                  tau = -1000, kappa = -1000, lambda_ = -1000, epsilon = -1000)
+upper_bounds <- c(alpha = 1000, beta = 1000, gamma = 1000, theta = 1000,
+                  tau = 1000, kappa = 1000, lambda_ = 1000, epsilon = 1000)
 
 # Fit the Non-Linear Model using the Levenberg-Marquardt (LM) Method ----
 model <- nlsLM(mal ~ (alpha * (r ^ -1.0) - beta * ((sin(cw / tw)) * (ce)) +
@@ -52,7 +60,7 @@ model <- nlsLM(mal ~ (alpha * (r ^ -1.0) - beta * ((sin(cw / tw)) * (ce)) +
 summary(model)
 
 # Plot the Residuals ----
-plot(residuals(model), type = 'p', main = "Residuals of the Model",
+plot(residuals(model), type = 'p', main = "Residuals of the Model for Large-Scale Farmers",
      xlab = "Fitted Values", ylab = "Residuals")
 abline(h = 0, col = "red")
 
