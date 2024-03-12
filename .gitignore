@@ -159,5 +159,24 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# Ignore RStudio specific files
+.Rproj.user/
+.Rhistory
+
+# Ignore R environment files
+.RData
+.Ruserdata
+
+# Ignore sensitive credentials and keys
+config.yml
+secrets.json
+api_key.txt
+
+# Ignore compiled code
+*.dll
+*.so
+
+
 Subsystem3-Crop-Production/Sandbox/
 Datasets/~$Credible Market Prices for Dry Maize in Siaya County.xls
+.Rproj.user
