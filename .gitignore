@@ -176,7 +176,4 @@ api_key.txt
 *.dll
 *.so
 
-
-Subsystem3-Crop-Production/Sandbox/
-Datasets/~$Credible Market Prices for Dry Maize in Siaya County.xls
-.Rproj.user
+/Datasets/~$siaya.xlsx
