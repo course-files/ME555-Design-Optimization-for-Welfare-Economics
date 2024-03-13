@@ -1,22 +1,22 @@
 # **********************************************************************
-# ==== Constrained Optimization BY Linear Approximations (COBYLA) ====
+# Constrained Optimization BY Linear Approximations (COBYLA) ----
 #
 # Course Code: ME555
 # Course Name: Design Optimization
 # University of Michigan
 # Semester Duration: 10th Jan 2024 to 29th April 2024
 # 
-# ==== Purpose ====
+# Purpose ----
 # Perform function optimization using the Constrained Optimization BY Linear
 # Approximations (COBYLA) algorithm.
 # **********************************************************************
 
-# ==== Imports ====
+# Imports ----
 import nlopt
 import numpy as np
 
 
-# ==== Objective Function ====
+# Objective Function ----
 def objective_function(x, grad):
     """
     This is the objective function to be minimized.
@@ -29,18 +29,28 @@ def objective_function(x, grad):
     qd = x[5]
     qs = x[6]
     ts = x[7]
-    mal = x[8]
-    tal = x[9]
+    tal = x[8]
+    mal = x[9]
     """
-    return (1 * (x[0] ** -1.0) - 1 * ((np.sin(x[1] / x[2])) ** 1/3 * (x[3]) ** 2/3) +
-            (x[4]) ** 1 + 1 * (x[5]) ** -1.0 + 1 * ((np.sin(x[6] / x[7])) - x[5]) +
-            1 * (x[8] ** -1.0) - 1 * (x[9] ** -1))
+    # Model without parameter values
+    # return (1 * (x[0] ** -1.0) - 1 * ((np.sin(x[1] / x[2])) * (x[3])) +
+    #         (x[4]) ** 1 + 1 * (x[5]) ** -1.0 + 1 * ((np.sin(x[6] / x[7])) - x[5]) -
+    #         1 * (x[8] ** -1)) - (x[9] ** -1.0)
+
+# Small-Scale Farmer Model with Parameter Values ----
+    return (1000 * (x[0] ** -1.0) + 0.0006389 * (-(np.sin(x[1] / x[2])) * -(x[3])) +
+            (x[4]) ** 0.6384 + 1000 * (x[5]) ** -1.0 + 0.01999 * ((np.sin(x[6] / x[7])) - x[5]) +
+            0.001 * -(x[8] ** -1)) - (x[9] ** -1.0) + 269.2
+
+# TODO: Medium-Scale Farmer Model with Parameter Values
+
+# TODO: Large-Scale Farmer Model with Parameter Values
 
 
-# ==== Constraint Functions ====
+# Constraint Functions ----
 # Inequality constraint function in the form g(x) <= 0
 def g1(x, grad):
-    return x[9] - x[0]
+    return x[8] - x[0]
 
 
 # Inequality constraint function in the form g(x) <= 0
@@ -55,12 +65,13 @@ def g3(x, grad):
 
 # Inequality constraint function in the form g(x) <= 0
 def g4(x, grad):
-    return (0.15 / x[0]) - x[8]
+    return x[9] - (0.15 / x[0])
 
 
 # Equality constraint function in the form h(x) = 0
 def h1(x, grad):
     return x[6] - x[5]
+
 
 # Equality constraint function in the form h(x) = 0
 def h2(x, grad):
@@ -72,11 +83,12 @@ def h3(x, grad):
     return 5 - x[7]
 
 
-# ==== Constraint Bounds ====
-lower_bounds = [46700, 20, 1, 2000, 0, 720, 720, 1, 50, 5000]
-upper_bounds = [70049, 5000, 12, 10000, 180, 1080, 1080, 12, 500, 20000]
+# Constraint Bounds ----
+# Small-Scale Farmers
+lower_bounds = [46700, 20, 3, 2000, 0, 720, 720, 5, 5000, 50]
+upper_bounds = [70049, 5000, 3, 10000, 180, 1080, 1080, 5, 20000, 500]
 
-# ==== Optimizer Object ====
+# Optimizer Object ----
 # Create an optimizer object with 10 dimensions for COBYLA
 opt = nlopt.opt(nlopt.LN_COBYLA, 10)
 
@@ -104,9 +116,9 @@ opt.set_upper_bounds(upper_bounds)
 opt.set_xtol_rel(1e-4)
 opt.set_maxeval(1000)
 
-# ==== Perform the Optimization ====
+# Perform the Optimization ----
 # Initialization point
-x_opt = opt.optimize([46700, 20, 1, 2000, 0, 720, 720, 1, 50, 5000])
+x_opt = opt.optimize([46700, 20, 3, 2000, 0, 720, 720, 5, 5000, 50])
 min_f = opt.last_optimum_value()
 
 # print(f"Optimal solution found: {x_opt}, with minimum value: {min_f}")
