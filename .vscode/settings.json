@@ -11,7 +11,10 @@
     "zenMode.centerLayout": true,
     "zenMode.hideStatusBar": false,
     "cSpell.ignoreWords": [
+        "cmap",
         "maxeval",
+        "mplot",
+        "toolkits",
         "xtol"
     ]
 }
