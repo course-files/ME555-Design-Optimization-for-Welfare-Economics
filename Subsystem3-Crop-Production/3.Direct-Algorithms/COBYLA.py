@@ -118,7 +118,7 @@ opt.set_maxeval(1000)
 
 # Perform the Optimization ----
 # Initialization point
-x_opt = opt.optimize([46700, 20, 3, 2000, 0, 720, 720, 5, 5000, 50])
+x_opt = opt.optimize([58374.5, 2510, 3, 6000, 90, 900, 900, 5, 12500, 275])
 min_f = opt.last_optimum_value()
 
 # print(f"Optimal solution found: {x_opt}, with minimum value: {min_f}")
