@@ -5,6 +5,7 @@ ineq
 ISRES
 Levenberg
 Marquardt
+meshgrid
 nlopt
 pylab
 RMSE
