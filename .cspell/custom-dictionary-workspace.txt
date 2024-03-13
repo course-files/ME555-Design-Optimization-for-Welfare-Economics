@@ -2,6 +2,7 @@
 argmin
 COBYLA
 ineq
+ISRES
 Levenberg
 Marquardt
 nlopt
