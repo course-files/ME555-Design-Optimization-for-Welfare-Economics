@@ -1,6 +1,9 @@
 # Custom Dictionary Words
 argmin
 COBYLA
+colorbar
+edgecolor
+figsize
 ineq
 ISRES
 Levenberg
@@ -13,4 +16,7 @@ Siaya
 SLSQP
 stddev
 xlab
+xlabel
 ylab
+ylabel
+zlabel
