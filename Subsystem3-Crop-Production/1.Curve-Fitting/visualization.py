@@ -30,20 +30,14 @@ def objective(x):
     tal = x[8]
     mal = x[9]
     """
-    # Model without parameter values
-    # return (1 * (x[0] ** -1.0) - 1 * ((np.sin(x[1] / x[2])) * (x[3])) +
-    #         (x[4]) ** 1 + 1 * (x[5]) ** -1.0 + 1 * ((np.sin(x[6] / x[7])) - x[5]) -
-    #         1 * (x[8] ** -1)) - (x[9] ** -1.0)
-
-    # Small-Scale Farmer Model with Parameter Values ----
-    return (1000 * (x[0] ** -1.0) + 0.0006389 * (-(np.sin(x[1] / x[2])) * -(x[3])) +
-            (x[4]) ** 0.6384 + 1000 * (x[5]) ** -1.0 + 0.01999 * ((np.sin(x[6] / x[7])) - x[5]) +
-            0.001 * -(x[8] ** -1)) - (x[9] ** -1.0) + 269.2
+    return (10 * (x[0] ** -1.0) - 0.00001159 * ((np.sin(x[1] / x[2])) * (x[3])) -
+            6.029 * (x[4]) + 10 * (x[5]) ** -1.0 - 4.03 * ((np.sin(x[6] / x[7])) - x[5]) -
+            10 * -(x[8] ** -1)) - (x[9] ** -1.0) - 10
 
 
 # Bounds for the variables
-lower_bounds = np.array([46700, 20, 3, 2000, 0, 720, 720, 5, 5000, 50])
-upper_bounds = np.array([70049, 5000, 3, 10000, 180, 1080, 1080, 5, 20000, 500])
+lower_bounds = np.array([46700, 50, 3, 2000, 0, 720, 720, 5, 5000, 50])
+upper_bounds = np.array([233496, 200000, 3, 500000, 720, 3600, 3600, 5, 1000000, 20000])
 
 
 # Adjusted function to plot with x[6] and x[9], fixing the rest of the variables
@@ -77,7 +71,7 @@ fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5)
 ax.set_xlabel('x[6]')
 ax.set_ylabel('x[9]')
 ax.set_zlabel('Objective Function Value')
-ax.set_title('3D Plot of the Small-Scale Farmers\' Objective Function with '
-             'Variables x[6] (Quantity Supplied) and '
-             'x[9] (Market Access License Fee)')
+ax.set_title('3D Plot of the Model\'s Objective Function with '
+             'Variables x[9] (Market Access License Fee) and '
+             'x[6] (Quantity Supplied)')
 plt.show()
