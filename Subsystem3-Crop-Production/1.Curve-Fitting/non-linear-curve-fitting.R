@@ -20,6 +20,14 @@ if (require("minpack.lm")) {
                    repos = "https://cloud.r-project.org")
 }
 
+## caret ----
+if (require("caret")) {
+  require("caret")
+} else {
+  install.packages("caret", dependencies = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+
 # Dataset ----
 # URL of the dataset
 url <- "https://raw.githubusercontent.com/course-files/ME555-Design-Optimization-for-Welfare-Economics/main/Datasets/siaya.csv" # nolint
@@ -33,9 +41,26 @@ data <- read.csv(url)
 
 # Large-Scale farmers only: data <- data[7001:10000, ]
 
-
 # Check the first few rows of the dataset
 head(data)
+
+## Split the dataset ----
+# Define an 80:10:10 train:test:validate data split of the dataset.
+# That is, 80% of the original data will be used to train the model,
+# 10% of the original data will be used to test the model and
+# 10% of the original data will be used to validate the model.
+
+train_index <- createDataPartition(data$i,
+                                   p = 0.8,
+                                   list = FALSE)
+train <- data[train_index, ]
+test_validate <- data[-train_index, ]
+
+train_index <- createDataPartition(test_validate$i,
+                                   p = 0.5,
+                                   list = FALSE)
+test <- test_validate[train_index, ]
+validate <- test_validate[-train_index, ]
 
 # Set the Initialization and Bounds ----
 start_vector <- c(alpha = 1, beta = 1, gamma = 1, theta = 1, tau = 1,
@@ -50,7 +75,7 @@ model <- nlsLM(mal ~ (alpha * (r ^ -1.0) - beta * ((sin(cw / tw)) * (ce)) +
                         gamma * (qs_stddev) + theta * (qd) ^ -1.0 +
                         tau * ((sin(qs / ts)) - qd) -
                         kappa * (tal ^ -1) + epsilon),
-               data = data,
+               data = train,
                start = start_vector,
                lower = lower_bounds,
                upper = upper_bounds)
@@ -80,21 +105,21 @@ abline(h = 1, col = "red")
 
 # General guidelines:
 ## •	R_Squared > 0.9: The model explains most of the variability of the response
-# data around its mean, which is typically considered excellent in many
-# applications.
-## •	0.7 ≤< R_Squared ≤ 0.9: The model explains a substantial amount of
-# variability, considered good in many fields.
+#     data around its mean, which is typically considered excellent in many
+#     applications.
+## •	0.7 ≤ R_Squared ≤ 0.9: The model explains a substantial amount of
+#     variability, considered good in many fields.
 ## •	0.5 < R_Squared ≤0.7: The model explains a moderate amount of variability,
-# which can be acceptable depending on the domain.
+#     which can be acceptable depending on the domain.
 ## •	R_Squared ≤0.5: The model does not explain much variability in the
-# response; its predictive capability can be considered weak.
+#     response; its predictive capability can be considered weak.
 
 # However, a model can have a high R_Squared value but might still fail at
 # predictive tasks, especially if it is overfitting the training data.
 # Conversely, a model with a lower R_Squared value might be more generalizable
 # or useful in practice.
 
-predictions <- predict(model)
+predictions <- predict(model, test[, -10])
 
 # Calculate RMSE
 rmse <- sqrt(mean((data$mal - predictions)^2))
@@ -119,4 +144,3 @@ print(sprintf("R Squared = %.2f", r_squared))
 # Calculate MAE
 mae <- mean(abs(data$mal - predictions))
 print(sprintf("Mean Absolute Error (MAE) = %.2f", mae))
-
