@@ -13,65 +13,46 @@
 # Imports ----
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
+# Define the function for the objective
+def objective_function(exp, mal, r=1, amp_w = 1, t_w = 1, tp_w = 1, phase_w = 1, vert_w = 1, acre = 1, c_w = 1, qe=1, ce = 1, qd = 1, qs = 1, tal = 1, vert = 1):
+    return (
+        0.2350747 * r ** (-1.0)
+        + 0.4804318 * ((
+            ((amp_w * np.sin((2 * np.pi) / t_w * (tp_w - phase_w)) + vert_w) * acre * c_w) ** 0.4) * 
+            (qe * acre * ce) ** 0.6 )
+        + 0.2811869 * qd
+        - 0.9963252 * qs
+        - 0.1230044 * (1)
+        + 0.2777817 * tal ** (-1.0)
+        + 1.1544897 * vert ** (-1.0)
+        + 0.1500959 * exp ** (-1.0)
+        + 0.1491099 * mal ** (-1.0)
+        + 0.0004785
+    )
 
-# Objective Function ----
-def objective(x):
-    """
-    This is the objective function to be minimized.
-    r = x[0]
-    cw = x[1]
-    tw = x[2]
-    ce = x[3]
-    qs_stddev = x[4]
-    qd = x[5]
-    qs = x[6]
-    ts = x[7]
-    tal = x[8]
-    mal = x[9]
-    """
-    return (10 * (x[0] ** -1.0) - 0.00001159 * ((np.sin(x[1] / x[2])) * (x[3])) -
-            6.029 * (x[4]) + 10 * (x[5]) ** -1.0 - 4.03 * ((np.sin(x[6] / x[7])) - x[5]) -
-            10 * -(x[8] ** -1)) - (x[9] ** -1.0) - 10
+# Create the grid of values
+exp_values = np.linspace(0.1, 2, 100)  # Avoid division by zero by starting from 0.1
+mal_values = np.linspace(0.1, 2, 100)  # Avoid division by zero by starting from 0.1
+exp_grid, mal_grid = np.meshgrid(exp_values, mal_values)
+z_values = objective_function(exp_grid, mal_grid)
 
-
-# Bounds for the variables
-lower_bounds = np.array([46700, 50, 3, 2000, 0, 720, 720, 5, 5000, 50])
-upper_bounds = np.array([233496, 200000, 3, 500000, 720, 3600, 3600, 5, 1000000, 20000])
-
-
-# Adjusted function to plot with x[6] and x[9], fixing the rest of the variables
-def adjusted_objective_for_x6_x9(x6, x9, fixed_x):
-    x = fixed_x.copy()
-    x[6], x[9] = x6, x9
-    return objective(x)
-
-
-# Midpoints for variables not being varied in the plot
-fixed_x = (lower_bounds + upper_bounds) / 2
-
-# Ranges for variables x[6] and x[9] to be varied in the plot
-x6_range = np.linspace(lower_bounds[6], upper_bounds[6], 50)
-x9_range = np.linspace(lower_bounds[9], upper_bounds[9], 50)
-
-# Create meshgrid for x[6] and x[9]
-X6, X9 = np.meshgrid(x6_range, x9_range)
-Z = np.zeros(X6.shape)
-
-# Calculate Z values using the adjusted objective function
-for i in range(X6.shape[0]):
-    for j in range(X6.shape[1]):
-        Z[i, j] = adjusted_objective_for_x6_x9(X6[i, j], X9[i, j], fixed_x)
-
-# Plotting
-fig = plt.figure(figsize=(10, 7))
+# Plotting the 3D surface plot
+fig = plt.figure(figsize=(14, 9))
 ax = fig.add_subplot(111, projection='3d')
-surf = ax.plot_surface(X6, X9, Z, cmap='jet', edgecolor='none')
-fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5)
-ax.set_xlabel('x[6]')
-ax.set_ylabel('x[9]')
-ax.set_zlabel('Objective Function Value')
-ax.set_title('3D Plot of the Model\'s Objective Function with '
-             'Variables x[9] (Market Access License Fee) and '
-             'x[6] (Quantity Supplied)')
+
+# Surface plot
+surf = ax.plot_surface(exp_grid, mal_grid, z_values, cmap='jet')
+
+# Labels and title
+ax.set_xlabel('Export Fee (exp)')
+ax.set_ylabel('Market Access Licence Fee (mal)')
+ax.set_zlabel('Objective Function')
+ax.set_title('Surface Plot of the Objective Function\'s \nMarket Access License Fee (mal) \nand the Export Fee (exp) \nWhile Holding all Other Variables at a Constant of 1')
+
+# Color bar
+fig.colorbar(surf, shrink=0.5, aspect=5)
+
+# Show the plot
 plt.show()
