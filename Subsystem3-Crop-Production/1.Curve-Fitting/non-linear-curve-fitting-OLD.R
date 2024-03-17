@@ -50,31 +50,68 @@ head(data)
 # 10% of the original data will be used to test the model and
 # 10% of the original data will be used to validate the model.
 
-train_index <- createDataPartition(data$i,
+train_index1 <- createDataPartition(data$i,
                                    p = 0.8,
                                    list = FALSE)
-train <- data[train_index, ]
-test_validate <- data[-train_index, ]
+train <- data[train_index1, ]
+test_validate <- data[-train_index1, ]
 
-train_index <- createDataPartition(test_validate$i,
+train_index2 <- createDataPartition(test_validate$i,
                                    p = 0.5,
                                    list = FALSE)
-test <- test_validate[train_index, ]
-validate <- test_validate[-train_index, ]
+test <- test_validate[train_index2, ]
+validate <- test_validate[-train_index2, ]
 
 # Set the Initialization and Bounds ----
-start_vector <- c(alpha = 1, beta = 1, gamma = 1, theta = 1, tau = 1,
-                  kappa = 1, epsilon = 1)
-lower_bounds <- c(alpha = -10, beta = -10, gamma = -10, theta = -10,
-                  tau = -10, kappa = -10, epsilon = -10)
-upper_bounds <- c(alpha = 10, beta = 10, gamma = 10, theta = 10,
-                  tau = 10, kappa = 10, epsilon = 1000)
+start_vector <- c(alpha = 0.1, beta = 0.1, theta = 0.1, tau = 0.1,
+                  kappa = 0.1, psi = 0.1, omega = 0.1, epsilon = 1)
+lower_bounds <- c(alpha = -10, beta = -10, theta = -10,
+                  tau = -10, kappa = -10, psi = -10, omega = -10, epsilon = -10)
+upper_bounds <- c(alpha = 10, beta = 10, theta = 10,
+                  tau = 10, kappa = 10, psi = 10, omega = 10, epsilon = 100)
 
 # Fit the Non-Linear Model using the Levenberg-Marquardt (LM) Method ----
-model <- nlsLM(mal ~ (alpha * (r ^ -1.0) - beta * ((sin(cw / tw)) * (ce)) +
-                        gamma * (qs_stddev) + theta * (qd) ^ -1.0 +
-                        tau * ((sin(qs / ts)) - qd) -
-                        kappa * (tal ^ -1) + epsilon),
+model <- nlsLM(train$qs_stddev ~
+                 (alpha *
+                    (train$r ^ -1.0) -
+                    beta *
+                      (
+                        (
+                          (
+                            (train$amp_w * (
+                                            sin (
+                                                    ((2 * pi) / train$tw) *
+                                                    (train$tp_w - train$phase_w)
+                                            )
+                            )
+                            + train$vert_w) * train$acre * train$cw
+                            ) ^ 0.4
+                        ) *
+                        (train$qe * train$acre * train$ce) ^ 0.6
+                      ) +
+                    theta *
+                    (qd ^ -1.0) +
+                    tau *
+                    (
+                      (
+                        (
+                          (train$amp_s * (
+                            sin (
+                              ((2 * pi) / train$ts) *
+                                (train$tp_s - train$phase_s)
+                            )
+                          )
+                          + train$vert_s)
+                        )
+                      ) -
+                      train$qd
+                    ) +
+                    kappa *
+                    (train$tal ^ -1) +
+                    psi *
+                    (train$exp ^ -1.0) +
+                    (train$mal ^ -1.0) ^ omega +
+                    epsilon),
                data = train,
                start = start_vector,
                lower = lower_bounds,
@@ -87,7 +124,7 @@ summary(model)
 plot(residuals(model), type = "p",
      main = "Residuals of the Model",
      xlab = "Fitted Values", ylab = "Residuals")
-abline(h = 1, col = "red")
+abline(h = 0.1, col = "red")
 
 
 # Print the Evaluation Metrics ----
@@ -119,15 +156,15 @@ abline(h = 1, col = "red")
 # Conversely, a model with a lower R_Squared value might be more generalizable
 # or useful in practice.
 
-predictions <- predict(model, test[, -10])
+predictions <- predict(model, test[, -24])
 
 # Calculate RMSE
-rmse <- sqrt(mean((data$mal - predictions)^2))
+rmse <- sqrt(mean((train$qs_stddev - predictions)^2))
 print(sprintf("RMSE = %.2f", rmse))
 
 # Calculate R Squared
 # Total Sum of Squares (variation in the data)
-sst <- sum((data$mal - mean(data$mal))^2)
+sst <- sum((train$qs_stddev - mean(train$qs_stddev))^2)
 
 # Sum of Squared Residuals (unexplained variation)
 ssr <- sum(residuals(model)^2)
@@ -142,5 +179,6 @@ print(sprintf("R Squared = %.2f", r_squared))
 # and 'y' contains the observed values
 
 # Calculate MAE
-mae <- mean(abs(data$mal - predictions))
+mae <- mean(abs(train$qs_stddev - predictions))
 print(sprintf("Mean Absolute Error (MAE) = %.2f", mae))
+
