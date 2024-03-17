@@ -17,6 +17,30 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # Objective Function ----
 def objective_function(exp, mal):
+    """
+    The variables and parameters have been coded as follows:
+    x[0] = r
+    x[1] = amp_w
+    x[2] = t_w
+    x[3] = tp_w
+    x[4] = phase_w
+    x[5] = vert_w
+    x[6] = acre
+    x[7] = c_w
+    x[8] = qe
+    x[9] = ce
+    x[10] = qd
+    x[11] = qs
+    x[12] = amp_s
+    x[13] = t_s
+    x[14] = tp_s
+    x[15] = phase_s
+    x[16] = vert_s
+    x[17] = tal
+    x[18] = exp
+    x[19] = mal
+    """
+
     # Initialize x with ones for other variables, and set the last two to exp and mal
     x = np.ones(20)
     x[18] = exp  # exp
@@ -59,7 +83,7 @@ surf = ax.plot_surface(exp_grid, mal_grid, z_values, cmap='jet')
 ax.set_xlabel('Export Fee (exp)')
 ax.set_ylabel('Market Access Licence Fee (mal)')
 ax.set_zlabel('Objective Function')
-ax.set_title('Surface Plot of the Objective Function\'s \nMarket Access License Fee (mal) \nand the Export Fee (exp) \nWhile Holding all Other Variables at a Constant of 1')
+ax.set_title('Surface Plot of the Unconstrained Objective Function\'s \nMarket Access License Fee (mal) \nand the Export Fee (exp) \nWhile Holding all Other Variables at a Constant of 1')
 
 # Color bar
 fig.colorbar(surf, shrink=0.5, aspect=5)
