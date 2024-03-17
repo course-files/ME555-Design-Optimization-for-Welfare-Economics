@@ -19,26 +19,51 @@ import numpy as np
 # Objective Function ----
 def objective_function(x):
     """
-    This is the objective function to be minimized.
-    r = x[0]
-    cw = x[1]
-    tw = x[2]
-    ce = x[3]
-    qs_stddev = x[4]
-    qd = x[5]
-    qs = x[6]
-    ts = x[7]
-    tal = x[8]
-    mal = x[9]
+    The variables and parameters have been coded as follows:
+    x[0] = r
+    x[1] = amp_w
+    x[2] = t_w
+    x[3] = tp_w
+    x[4] = phase_w
+    x[5] = vert_w
+    x[6] = acre
+    x[7] = c_w
+    x[8] = qe
+    x[9] = ce
+    x[10] = qd
+    x[11] = qs
+    x[12] = amp_s
+    x[13] = t_s
+    x[14] = tp_s
+    x[15] = phase_s
+    x[16] = vert_s
+    x[17] = tal
+    x[18] = exp
+    x[19] = mal
     """
     # Model without parameter values
     # return (1 * (x[0] ** -1.0) - 1 * ((np.sin(x[1] / x[2])) * (x[3])) +
     #         (x[4]) ** 1 + 1 * (x[5]) ** -1.0 + 1 * ((np.sin(x[6] / x[7])) - x[5]) -
     #         1 * (x[8] ** -1)) - (x[9] ** -1.0)
 
-    return ((10 * (x[0] ** -1.0) - 0.00001159 * ((np.sin(x[1] / x[2])) * (x[3])) -
-            6.029 * (x[4]) + 10 * (x[5]) ** -1.0 - 4.03 * ((np.sin(x[6] / x[7])) - x[5]) -
-            10 * -(x[8] ** -1)) - (x[9] ** -1.0) - 10)
+    # return ((10 * (x[0] ** -1.0) - 0.00001159 * ((np.sin(x[1] / x[2])) * (x[3])) -
+    #         6.029 * (x[4]) + 10 * (x[5]) ** -1.0 - 4.03 * ((np.sin(x[6] / x[7])) - x[5]) -
+    #         10 * -(x[8] ** -1)) - (x[9] ** -1.0) - 10)
+    return (
+        0.2350747 * x[0] ** (-1.0)
+        + 0.4804318 * (
+            (((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) ** 0.4) * 
+            (x[8] * x[6] * x[9]) ** 0.6 
+        )
+        + 0.2811869 * x[10]
+        - 0.9963252 * x[11]
+        - 0.1230044 * ((x[12] * np.sin((2 * np.pi) / x[14] * (x[14] - x[15])) + x[16]) * x[10])
+        + 0.2777817 * x[17] ** (-1.0)
+        + 1.1544897 * x[16] ** (-1.0)
+        + 0.1500959 * x[18] ** (-1.0)
+        + 0.1491099 * x[19] ** (-1.0)
+        + 0.0004785
+    )
 
 
 # Constraint Functions ----
@@ -73,19 +98,19 @@ def h3(x):
 # Function to check if a solution is feasible
 def is_feasible(x):
     return all([
-        g1(x) <= 0,
-        g2(x) <= 0,
-        g3(x) <= 0,
-        abs(g4(x)) <= 1e3, # Tolerance level
-        abs(h1(x)) <= 1e0,
-        h2(x) == 0,
-        h3(x) == 0
+        # g1(x) <= 0,
+        # g2(x) <= 0,
+        # g3(x) <= 0,
+        # abs(g4(x)) <= 1e3, # Tolerance level
+        # abs(h1(x)) <= 1e0,
+        # h2(x) == 0,
+        # h3(x) == 0
     ])
 
 
 # Constraint Bounds ----
-lower_bounds = np.array([46700, 20, 3, 2000, 0, 720, 720, 5, 5000, 50])
-upper_bounds = np.array([70049, 5000, 3, 10000, 180, 1080, 1080, 5, 20000, 500])
+lower_bounds = np.array([34.58,10000,6,6,4.5,26305.14,0.1,0.00044,5,1.49,720,720,180,6,6,4.5,720,37,0.37,0.37])
+upper_bounds = np.array([345.58,10000,6,6,4.5,26305.14,20,0.00044,100,1.49,3600,3600,675,6,6,4.5,2700,7400,148,444.42])
 
 # Perform a Random Search for a Feasible Solution ----
 num_samples = 1000  # Increase if needed to find a feasible solution
@@ -94,7 +119,7 @@ best_x = None
 
 for _ in range(num_samples):
     # Generate a random sample within the bounds
-    x = lower_bounds + np.random.rand(10) * (upper_bounds - lower_bounds)
+    x = lower_bounds + np.random.rand(20) * (upper_bounds - lower_bounds)
     
     # Check if the solution is feasible
     if is_feasible(x):
