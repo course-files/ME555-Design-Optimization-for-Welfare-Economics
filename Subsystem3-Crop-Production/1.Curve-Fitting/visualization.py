@@ -15,28 +15,38 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-# Define the function for the objective
-def objective_function(exp, mal, r=1, amp_w = 1, t_w = 1, tp_w = 1, phase_w = 1, vert_w = 1, acre = 1, c_w = 1, qe=1, ce = 1, qd = 1, qs = 1, tal = 1, vert = 1):
+# Objective Function ----
+def objective_function(exp, mal):
+    # Initialize x with ones for other variables, and set the last two to exp and mal
+    x = np.ones(20)
+    x[18] = exp  # exp
+    x[19] = mal  # mal
     return (
-        0.2350747 * r ** (-1.0)
-        + 0.4804318 * ((
-            ((amp_w * np.sin((2 * np.pi) / t_w * (tp_w - phase_w)) + vert_w) * acre * c_w) ** 0.4) * 
-            (qe * acre * ce) ** 0.6 )
-        + 0.2811869 * qd
-        - 0.9963252 * qs
-        - 0.1230044 * (1)
-        + 0.2777817 * tal ** (-1.0)
-        + 1.1544897 * vert ** (-1.0)
-        + 0.1500959 * exp ** (-1.0)
-        + 0.1491099 * mal ** (-1.0)
+        0.2350747 * x[0] ** (-1.0)
+        + 0.4804318 * (
+            (((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) ** 0.4) * 
+            (x[8] * x[6] * x[9]) ** 0.6 
+        )
+        + 0.2811869 * x[10]
+        - 0.9963252 * x[11]
+        - 0.1230044 * ((x[12] * np.sin((2 * np.pi) / x[14] * (x[14] - x[15])) + x[16]) * x[10])
+        + 0.2777817 * x[17] ** (-1.0)
+        + 1.1544897 * x[16] ** (-1.0)
+        + 0.1500959 * x[18] ** (-1.0)
+        + 0.1491099 * x[19] ** (-1.0)
         + 0.0004785
     )
 
 # Create the grid of values
-exp_values = np.linspace(0.1, 2, 100)  # Avoid division by zero by starting from 0.1
-mal_values = np.linspace(0.1, 2, 100)  # Avoid division by zero by starting from 0.1
+exp_values = np.linspace(0.37, 2, 148)  # Avoid division by zero by starting from USD 0.37
+mal_values = np.linspace(0.37, 2, 148)  # Avoid division by zero by starting from USD 0.37
 exp_grid, mal_grid = np.meshgrid(exp_values, mal_values)
-z_values = objective_function(exp_grid, mal_grid)
+
+# Vectorize the objective function for element-wise application
+vectorized_objective_function = np.vectorize(objective_function)
+
+# Apply the vectorized function over the grid
+z_values = vectorized_objective_function(exp_grid, mal_grid)
 
 # Plotting the 3D surface plot
 fig = plt.figure(figsize=(14, 9))
