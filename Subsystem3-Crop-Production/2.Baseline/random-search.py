@@ -102,6 +102,7 @@ def g8(x):
 def g9(x):
     return x[18] - x[19]
 
+
 # Function to check if a solution is feasible
 def is_feasible(x):
     return all([
@@ -124,8 +125,10 @@ def is_feasible(x):
 
 
 # Constraint Bounds ----
-lower_bounds = np.array([34.58,10000,6,6,4.5,26305.14,0.1,0.00044,5,1.49,720,720,180,6,6,4.5,720,37,0.37,0.37])
-upper_bounds = np.array([345.58,10000,6,6,4.5,26305.14,20,0.00044,100,1.49,3600,3600,675,6,6,4.5,2700,7400,148,444.42])
+lower_bounds = np.array([34.58, 10000, 6, 6, 4.5, 26305.14, 0.1, 0.00044, 5,
+                         1.49, 720, 720, 180, 6, 6, 4.5, 720, 37, 0.37, 0.37])
+upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
+                         1.49, 3600, 3600, 675, 6, 6, 4.5, 2700, 7400, 148, 444.42])
 
 # Perform a Random Search for a Feasible Solution ----
 num_samples = 100000  # Increase if needed to find a feasible solution
