@@ -1,5 +1,5 @@
 # **********************************************************************
-# Improved Stochastic Ranking Evolution Strategy (ISRES) ----
+# Adaptive Gradient Sampling (AGS) ----
 #
 # Course Code: ME555
 # Course Name: Design Optimization
@@ -7,8 +7,8 @@
 # Semester Duration: 10th Jan 2024 to 29th April 2024
 # 
 # Purpose ----
-# Perform function optimization using the Improved Stochastic Ranking
-# Evolution Strategy (ISRES) algorithm.
+# Perform function optimization using the Adaptive Gradient Sampling
+# (AGS) algorithm.
 # **********************************************************************
 
 # Imports ----
@@ -102,7 +102,7 @@ upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
                          1.49, 3600, 3600, 675, 6, 6, 4.5, 2700, 7400, 148, 444.42])
 
 # Optimizer Object ----
-# Create an optimizer object with 20 dimensions for COBYLA
+# Create an optimizer object with 20 dimensions
 opt = nlopt.opt(nlopt.GN_AGS, 20)
 
 # Set the objective function
