@@ -103,6 +103,14 @@ def g9(x):
     return x[18] - x[19]
 
 
+# Constraint Bounds ----
+lower_bounds = np.array([34.58, 10000, 6, 6, 4.5, 26305.14, 0.1, 0.00044, 5,
+                         1.49, 720, 720, 180, 6, 6, 4.5, 720, 37, 0.37, 0.37])
+upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
+                         1.49, 3600, 3600, 675, 6, 6, 4.5, 2700, 7400, 148,
+                         444.42])
+
+
 # Function to check if a solution is feasible
 def is_feasible(x):
     return all([
@@ -113,7 +121,7 @@ def is_feasible(x):
         # The tolerance checks whether the absolute value of the constraint
         # function is within a range of -1e3 to 1e3. This is a form of relaxed
         # constraint, allowing solutions where the constraint deviates
-        # significantly from zero, up to a thousand units in either direction.
+        # from zero, up to 0.001 units in either direction.
         # abs(g4(x)) <= 1e-3, # Tolerance level
         g4(x) <= 0,
         g5(x) <= 0,
@@ -123,12 +131,6 @@ def is_feasible(x):
         g9(x) <= 0
     ])
 
-
-# Constraint Bounds ----
-lower_bounds = np.array([34.58, 10000, 6, 6, 4.5, 26305.14, 0.1, 0.00044, 5,
-                         1.49, 720, 720, 180, 6, 6, 4.5, 720, 37, 0.37, 0.37])
-upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
-                         1.49, 3600, 3600, 675, 6, 6, 4.5, 2700, 7400, 148, 444.42])
 
 # Perform a Random Search for a Feasible Solution ----
 num_samples = 100000  # Increase if needed to find a feasible solution
@@ -153,7 +155,7 @@ for _ in range(num_samples):
 if best_x is not None:
     x_opt_formatted = ", ".join([f"{x:.8f}" for x in best_x])
     print(f"Best feasible random solution found: [{x_opt_formatted}], "
-          f"with minimum value: {best_f:.2f}")
+          f"with minimum value: {best_f:.8f}")
 else:
     print("No feasible solution found within the given number of samples. "
           "Consider increasing the number of samples or revising the constraints.")
