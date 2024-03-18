@@ -102,7 +102,7 @@ upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
                          1.49, 3600, 3600, 675, 6, 6, 4.5, 2700, 7400, 148, 444.42])
 
 # Optimizer Object ----
-# Create an optimizer object with 20 dimensions for COBYLA
+# Create an optimizer object with 20 dimensions
 opt = nlopt.opt(nlopt.LD_SLSQP, 20)
 
 # Set the objective function
