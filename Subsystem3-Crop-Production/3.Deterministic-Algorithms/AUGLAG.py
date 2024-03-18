@@ -7,8 +7,8 @@
 # Semester Duration: 10th Jan 2024 to 29th April 2024
 # 
 # Purpose ----
-# Perform function optimization using the Improved Stochastic Ranking
-# Evolution Strategy (ISRES) algorithm.
+# Perform function optimization using the Augmented Lagrangian
+# (AUGLAG) algorithm.
 # **********************************************************************
 
 # Imports ----
