@@ -1,6 +1,6 @@
 # **********************************************************************
 # Augmented Lagrangian algorithm (AUGLAG) ----
-#
+# 
 # Course Code: ME555
 # Course Name: Design Optimization
 # University of Michigan
