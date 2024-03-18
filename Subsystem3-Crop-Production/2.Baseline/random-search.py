@@ -57,7 +57,7 @@ def objective_function(x):
         )
         + 0.2811869 * x[10]
         - 0.9963252 * x[11]
-        - 0.1230044 * ((x[12] * np.sin((2 * np.pi) / x[14] * (x[14] - x[15])) + x[16]) * x[10])
+        - 0.1230044 * ((x[12] * np.sin((2 * np.pi) / x[13] * (x[14] - x[15])) + x[16]) - x[10])
         + 0.2777817 * x[17] ** (-1.0)
         + 1.1544897 * x[16] ** (-1.0)
         + 0.1500959 * x[18] ** (-1.0)
@@ -68,43 +68,58 @@ def objective_function(x):
 
 # Constraint Functions ----
 def g1(x):
-    return x[8] - x[0]
+    return x[17] - x[0]
 
 
 def g2(x):
-    return np.sin(x[1] / x[2]) + x[3] - x[0]
+    return ((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) - x[0]
 
 
 def g3(x):
-    return (0.1 / x[6]) - x[4]
+    return (x[8] * x[6] * x[9]) - x[0]
 
 
 def g4(x):
-    return x[9] - (0.15 / x[0])
+    return x[10] + 1000 - (x[12] * np.sin((2 * np.pi) / x[13] * (x[14] - x[15])) + x[16])
 
 
-def h1(x):
-    return x[6] - x[5]
+def g5(x):
+    return x[0] - (x[18] + x[19])
 
 
-def h2(x):
-    return x[2] - 3
+def g6(x):
+    return x[10] - x[11] - 1000
 
 
-def h3(x):
-    return 5 - x[7]
+def g7(x):
+    return x[11] - x[10] - 1000
 
+
+def g8(x):
+    return x[19] - x[17]
+
+
+def g9(x):
+    return x[18] - x[19]
 
 # Function to check if a solution is feasible
 def is_feasible(x):
     return all([
-        # g1(x) <= 0,
-        # g2(x) <= 0,
-        # g3(x) <= 0,
-        # abs(g4(x)) <= 1e3, # Tolerance level
-        # abs(h1(x)) <= 1e0,
-        # h2(x) == 0,
-        # h3(x) == 0
+        g1(x) <= 0,
+        g2(x) <= 0,
+        g3(x) <= 0,
+        # Tolerance Level
+        # The tolerance checks whether the absolute value of the constraint
+        # function is within a range of -1e3 to 1e3. This is a form of relaxed
+        # constraint, allowing solutions where the constraint deviates
+        # significantly from zero, up to a thousand units in either direction.
+        # abs(g4(x)) <= 1e-3, # Tolerance level
+        g4(x) <= 0,
+        g5(x) <= 0,
+        g6(x) <= 0,
+        g7(x) <= 0,
+        g8(x) <= 0,
+        g9(x) <= 0
     ])
 
 
@@ -113,7 +128,7 @@ lower_bounds = np.array([34.58,10000,6,6,4.5,26305.14,0.1,0.00044,5,1.49,720,720
 upper_bounds = np.array([345.58,10000,6,6,4.5,26305.14,20,0.00044,100,1.49,3600,3600,675,6,6,4.5,2700,7400,148,444.42])
 
 # Perform a Random Search for a Feasible Solution ----
-num_samples = 1000  # Increase if needed to find a feasible solution
+num_samples = 100000  # Increase if needed to find a feasible solution
 best_f = float('inf')
 best_x = None
 
@@ -133,7 +148,7 @@ for _ in range(num_samples):
 
 # Check if a solution was found
 if best_x is not None:
-    x_opt_formatted = ", ".join([f"{x:.2f}" for x in best_x])
+    x_opt_formatted = ", ".join([f"{x:.8f}" for x in best_x])
     print(f"Best feasible random solution found: [{x_opt_formatted}], "
           f"with minimum value: {best_f:.2f}")
 else:
