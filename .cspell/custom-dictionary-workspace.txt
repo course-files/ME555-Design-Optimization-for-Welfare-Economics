@@ -1,6 +1,7 @@
 # Custom Dictionary Words
 ampw
 argmin
+AUGLAG
 COBYLA
 colorbar
 edgecolor
