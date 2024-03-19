@@ -59,47 +59,43 @@ def objective_function(x, grad):
 
 
 # Constraint Functions ----
-def g1(x, grad):
-    return x[17] - x[0]
+def g1(x, grad): return x[17] - x[0]
 
 
-def g2(x, grad):
-    return ((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) - x[0]
+def g2(x, grad): return ((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) - x[0]
 
 
-def g3(x, grad):
-    return (x[8] * x[6] * x[9]) - x[0]
+def g3(x, grad): return (x[8] * x[6] * x[9]) - x[0]
 
 
-def g4(x, grad):
-    return x[10] + 1000 - (x[12] * np.sin((2 * np.pi) / x[13] * (x[14] - x[15])) + x[16])
+def g4(x, grad): return np.abs((x[12] * np.sin((2 * np.pi) / x[13] * (x[14] - x[15])) + x[16]) + x[10]) - 1000
 
 
-def g5(x, grad):
-    return x[0] - (x[18] + x[19])
+def g5(x, grad): return x[0] - (x[18] + x[19])
 
 
-def g6(x, grad):
-    return x[10] - x[11] - 1000
+def g6(x, grad): return x[11]
 
 
-def g7(x, grad):
-    return x[11] - x[10] - 1000
+def g7(x, grad): return x[11] + x[10] - 1000  # Inactive (removed)
 
 
-def g8(x, grad):
-    return x[19] - x[17]
+def g8(x, grad): return - x[17]
 
 
-def g9(x, grad):
-    return x[18] - x[19]
+def g9(x, grad): return x[18] - x[19]  # Inactive (removed)
 
 
-# Constraint Bounds ----
-lower_bounds = np.array([34.58, 10000, 6, 6, 4.5, 26305.14, 0.1, 0.00044, 5,
-                         1.49, 720, 720, 180, 6, 6, 4.5, 720, 37, 0.37, 0.37])
-upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
-                         1.49, 3600, 3600, 675, 6, 6, 4.5, 2700, 7400, 148, 444.42])
+# Bounds: Lower-Bound (lb), Upper-Bound (ub), and Initial Point (IP) ----
+lower_bounds = np.array([34.5799, 9999.9999, 5.9999, 5.9999, 4.4999, 26305.1399, 0.0999,
+               0.00034, 4.9999, 1.4899, 719.9999, 719.9999, 179.9999, 5.9999,
+               5.9999, 4.4999, 719.9999, 36.9999, 0.3699, 0.3699])
+upper_bounds = np.array([345.68, 10000.1, 6.1, 6.1, 4.6, 26305.24, 20.1, 0.10044, 100.1,
+               1.59, 3600.1, 3600.1, 675.1, 6.1, 6.1, 4.6, 2700.1, 7400.1,
+               148.1, 444.52])
+ip = np.array([190.08,  10000,  6,  6,  4.5,  26305.14,  10.05,  0.00044,
+               52.5,  1.49,  2160,  2160,  427.5,  6,  6,  4.5,  1710,  3718.5,
+               74.185, 222.395])
 
 # Optimizer Object ----
 # Create an optimizer object with 20 dimensions
@@ -116,9 +112,9 @@ opt.add_inequality_constraint(g3, 1e-3)
 opt.add_inequality_constraint(g4, 1e-3)
 opt.add_inequality_constraint(g5, 1e-3)
 opt.add_inequality_constraint(g6, 1e-3)
-opt.add_inequality_constraint(g7, 1e-3)
+# opt.add_inequality_constraint(g7, 1e-3)
 opt.add_inequality_constraint(g8, 1e-3)
-opt.add_inequality_constraint(g9, 1e-3)
+# opt.add_inequality_constraint(g9, 1e-3)
 
 # Add the equality constraints
 # with a tolerance for how closely they must be met
@@ -134,12 +130,20 @@ opt.set_maxeval(100000)
 
 # Perform the Optimization ----
 # Initialization point
-x_opt = opt.optimize([190.08, 10000, 6, 6, 4.5, 26305.14, 10.05, 0.00044, 52.5,
-                      1.49, 2160, 2160, 427.5, 6, 6, 4.5, 1710, 3718.5, 74.185,
-                      222.395])
+x_opt = opt.optimize([190.08,  10000,  6,  6,  4.5,  26305.14,  10.05,  0.00044,
+               52.5,  1.49,  2160,  2160,  427.5,  6,  6,  4.5,  1710,  3718.5,
+               74.185, 222.395])
 min_f = opt.last_optimum_value()
 
+# Print the Objective Function Value at the Optimal Solution ----
 # print(f"Optimal solution found: {x_opt}, with minimum value: {min_f}")
 
-x_opt_formatted = ", ".join([f"{x:.8f}" for x in x_opt])
-print(f"Optimal solution found: [{x_opt_formatted}], with minimum value: {min_f:.8f}")
+# x_opt_formatted = ", ".join([f"{x:.8f}" for x in x_opt])
+# print(f"Optimal solution found: [{x_opt_formatted}], with minimum value: {min_f:.8f}")
+
+# print(f"Optimal solution: {', '.join(f'{x:.8f}' for x in x_opt)}"
+#       f", Objective function value at optimal solution: {min_f:.8f}")
+
+
+print(f"Optimal solution: {', '.join(f'{x:.8f}' for x in x_opt)}"
+      f", {min_f:.8f}")
