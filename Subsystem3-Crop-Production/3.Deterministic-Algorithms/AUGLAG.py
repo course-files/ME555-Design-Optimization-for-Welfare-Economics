@@ -99,7 +99,7 @@ init_point = np.array([190.08,  10000,  6,  6,  4.5,  26305.14,  10.05,  0.00044
 
 
 # Optimizer Object ----
-# Create an optimizer object with 20 dimensions for COBYLA
+# Create an optimizer object with 20 dimensions
 opt = nlopt.opt(nlopt.LD_AUGLAG, 20)
 
 # Set the objective function

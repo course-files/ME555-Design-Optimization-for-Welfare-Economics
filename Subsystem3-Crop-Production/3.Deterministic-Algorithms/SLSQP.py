@@ -131,9 +131,7 @@ opt.set_maxeval(100000)
 
 # Perform the Optimization ----
 # Initialization point
-x_opt = opt.optimize([190.08,  10000,  6,  6,  4.5,  26305.14,  10.05,  0.00044,
-               52.5,  1.49,  2160,  2160,  427.5,  6,  6,  4.5,  1710,  3718.5,
-               74.185, 222.395])
+x_opt = opt.optimize(init_point)
 min_f = opt.last_optimum_value()
 
 # Print the Objective Function Value at the Optimal Solution ----
