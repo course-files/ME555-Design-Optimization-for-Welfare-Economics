@@ -303,3 +303,4 @@ dotplot(results, scales = scales)
 # "Best" is defined as the one with the highest R_Squared value (0.8706160).
 # Other metrics considered are the lowest RMSE and the lowest MAE.
 summary(model_glmStepAIC)
+saveRDS(model_glmStepAIC, "./Subsystem3-Crop-Production/1.Curve-Fitting/Models/model_glmStepAIC.rds") # nolint
