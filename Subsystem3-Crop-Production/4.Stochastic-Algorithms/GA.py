@@ -18,7 +18,7 @@ from deap import base, creator, tools, algorithms
 
 
 # Objective Function ----
-def objective_function(x, grad):
+def objective_function(x):
     """
     The variables and parameters have been coded as follows:
     x[0] = r
@@ -60,39 +60,39 @@ def objective_function(x, grad):
 
 
 # Constraint Functions ----
-def g1(x, grad):
+def g1(x):
     return x[17] - x[0]
 
 
-def g2(x, grad):
+def g2(x):
     return ((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) - x[0]
 
 
-def g3(x, grad):
+def g3(x):
     return (x[8] * x[6] * x[9]) - x[0]
 
 
-def g4(x, grad):
+def g4(x):
     return x[10] + 1000 - (x[12] * np.sin((2 * np.pi) / x[13] * (x[14] - x[15])) + x[16])
 
 
-def g5(x, grad):
+def g5(x):
     return x[0] - (x[18] + x[19])
 
 
-def g6(x, grad):
+def g6(x):
     return x[10] - x[11] - 1000
 
 
-def g7(x, grad):
+def g7(x):
     return x[11] - x[10] - 1000
 
 
-def g8(x, grad):
+def g8(x):
     return x[19] - x[17]
 
 
-def g9(x, grad):
+def g9(x):
     return x[18] - x[19]
 
 
@@ -106,22 +106,22 @@ upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
 # Objective Function
 def objective(individual):
     x = np.array(individual)
-    return objective_function(x, None),  # Note: grad is not used
+    return objective_function(x),  # Note: grad is not used
 
 
 # Constraint Functions as penalty
 def constraint_penalty(individual):
     x = np.array(individual)
     penalties = sum([
-        max(0, g1(x, None)),
-        max(0, g2(x, None)),
-        max(0, g3(x, None)),
-        max(0, g4(x, None)),
-        max(0, g5(x, None)),
-        max(0, g6(x, None)),
-        max(0, g7(x, None)),
-        max(0, g8(x, None)),
-        max(0, g9(x, None)),
+        max(0, g1(x)),
+        max(0, g2(x)),
+        max(0, g3(x)),
+        max(0, g4(x)),
+        max(0, g5(x)),
+        max(0, g6(x)),
+        max(0, g7(x)),
+        max(0, g8(x)),
+        max(0, g9(x)),
     ])
     return penalties,
 

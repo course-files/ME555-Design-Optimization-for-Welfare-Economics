@@ -141,9 +141,9 @@ min_f = opt.last_optimum_value()
 # x_opt_formatted = ", ".join([f"{x:.8f}" for x in x_opt])
 # print(f"Optimal solution found: [{x_opt_formatted}], with minimum value: {min_f:.8f}")
 
-# print(f"Optimal solution: {', '.join(f'{x:.8f}' for x in x_opt)}"
-#       f", Objective function value at optimal solution: {min_f:.8f}")
-
-
 print(f"Optimal solution: {', '.join(f'{x:.8f}' for x in x_opt)}"
-      f", {min_f:.8f}")
+      f", Objective function value at optimal solution: {min_f:.8f}")
+
+
+# print(f"Optimal solution: {', '.join(f'{x:.8f}' for x in x_opt)}"
+#       f", {min_f:.8f}")
