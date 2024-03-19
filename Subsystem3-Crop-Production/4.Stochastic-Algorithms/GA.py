@@ -60,53 +60,43 @@ def objective_function(x):
 
 
 # Constraint Functions ----
-def g1(x):
-    return x[17] - x[0]
+def g1(x): return x[17] - x[0]
 
 
-def g2(x):
-    return ((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) - x[0]
+def g2(x): return ((x[1] * np.sin((2 * np.pi) / x[2] * (x[3] - x[4])) + x[5]) * x[6] * x[7]) - x[0]
 
 
-def g3(x):
-    return (x[8] * x[6] * x[9]) - x[0]
+def g3(x): return (x[8] * x[6] * x[9]) - x[0]
 
 
-def g4(x):
-    return x[10] + 1000 - (x[12] * np.sin((2 * np.pi) / x[13] * (x[14] - x[15])) + x[16])
+def g4(x): return np.abs((x[12] * np.sin((2 * np.pi) / x[13] * (x[14] - x[15])) + x[16]) + x[10]) - 1000
 
 
-def g5(x):
-    return x[0] - (x[18] + x[19])
+def g5(x): return x[0] - (x[18] + x[19])
 
 
-def g6(x):
-    return x[10] - x[11] - 1000
+def g6(x): return x[11]
 
 
-def g7(x):
-    return x[11] - x[10] - 1000
+def g7(x): return x[11] + x[10] - 1000  # Inactive (removed)
 
 
-def g8(x):
-    return x[19] - x[17]
+def g8(x): return - x[17]
 
 
-def g9(x):
-    return x[18] - x[19]
+def g9(x): return x[18] - x[19]  # Inactive (removed)
 
 
-# Constraint Bounds ----
-lower_bounds = np.array([34.58, 10000, 6, 6, 4.5, 26305.14, 0.1, 0.00044, 5,
-                         1.49, 720, 720, 180, 6, 6, 4.5, 720, 37, 0.37, 0.37])
-upper_bounds = np.array([345.58, 10000, 6, 6, 4.5, 26305.14, 20, 0.00044, 100,
-                         1.49, 3600, 3600, 675, 6, 6, 4.5, 2700, 7400, 148, 444.42])
-
-
-# Objective Function
-def objective(individual):
-    x = np.array(individual)
-    return objective_function(x),  # Note: grad is not used
+# Bounds: Lower-Bound (lb), Upper-Bound (ub), and Initial Point (IP) ----
+lower_bounds = np.array([34.5799, 9999.9999, 5.9999, 5.9999, 4.4999, 26305.1399, 0.0999,
+               0.00034, 4.9999, 1.4899, 719.9999, 719.9999, 179.9999, 5.9999,
+               5.9999, 4.4999, 719.9999, 36.9999, 0.3699, 0.3699])
+upper_bounds = np.array([345.68, 10000.1, 6.1, 6.1, 4.6, 26305.24, 20.1, 0.10044, 100.1,
+               1.59, 3600.1, 3600.1, 675.1, 6.1, 6.1, 4.6, 2700.1, 7400.1,
+               148.1, 444.52])
+init_point = np.array([190.08,  10000,  6,  6,  4.5,  26305.14,  10.05,  0.00044,
+               52.5,  1.49,  2160,  2160,  427.5,  6,  6,  4.5,  1710,  3718.5,
+               74.185, 222.395])
 
 
 # Constraint Functions as penalty
@@ -119,11 +109,17 @@ def constraint_penalty(individual):
         max(0, g4(x)),
         max(0, g5(x)),
         max(0, g6(x)),
-        max(0, g7(x)),
-        max(0, g8(x)),
-        max(0, g9(x)),
+        # max(0, g7(x)),
+        max(0, g8(x))
+        # max(0, g9(x)),
     ])
     return penalties,
+
+
+# Perform the Optimization ----
+def objective(individual):
+    x = np.array(individual)
+    return objective_function(x),  # Note: grad is not used
 
 
 # Modify the individual if it violates the bounds
@@ -173,4 +169,5 @@ stats.register("max", max)
 result, log = algorithms.eaSimple(pop, toolbox, cxpb=crossover_probability, mutpb=mutation_probability,
                                    ngen=number_of_generations, stats=stats, halloffame=hof, verbose=True)
 
-print("Best individual is:", hof[0], "with fitness:", hof[0].fitness.values)
+# Print the Objective Function Value at the Optimal Solution ----
+print("Optimal solution:", hof[0], " Objective function value at optimal solution:", hof[0].fitness.values)
