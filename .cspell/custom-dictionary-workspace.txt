@@ -2,6 +2,8 @@
 ampw
 argmin
 AUGLAG
+basinhopping
+BFGS
 COBYLA
 colorbar
 cxpb
@@ -29,6 +31,7 @@ RMSE
 Siaya
 SLSQP
 stddev
+stepsize
 swarmsize
 tournsize
 xlab
