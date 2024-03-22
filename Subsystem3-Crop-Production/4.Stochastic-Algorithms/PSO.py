@@ -114,3 +114,11 @@ xopt, fopt = pso(objective_function, lb, ub, ieqcons=constraints,
 # print(f"Objective function value at optimal solution: {fopt:.8f}")
 print(f"Optimal solution: {', '.join(f'{value:.8f}' for value in xopt)}"
       f", Objective function value at optimal solution: {fopt:.8f}")
+
+# Optimal Solution ----
+# Optimal solution leads to an objective function value of -3,515.885829
+optimized_x = np.array([197.3555162, 10000.04094, 6.06058071, 6.06481227,
+                        4.55822528, 26305.20034, 4.36023396, 0.00221809,
+                        55.86751226, 1.54009833, 720.005943, 3600.099775,
+                        524.0792289, 6.04250929, 6.03679917, 4.55245179,
+                        2082.596513, 4423.625629, 52.0247252, 51.7242541])
