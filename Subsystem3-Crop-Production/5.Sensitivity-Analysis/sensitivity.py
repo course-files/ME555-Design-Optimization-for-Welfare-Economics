@@ -107,20 +107,17 @@ def perform_sensitivity_analysis(optimized_x, variables_indices, perturbation_pe
     
     return results
 
-# Print the Results ----
-
-# Performing the sensitivity analysis
+# Performing the sensitivity analysis to get the results
 # sensitivity_results_full = perform_sensitivity_analysis(
 #     optimized_x, variables_of_interest_indices,
 #     perturbation_percentage)
 
 # print(sensitivity_results_full)
 
-
-# Performing the sensitivity analysis to get the results
 sensitivity_results_full = perform_sensitivity_analysis(
     optimized_x, variables_of_interest_indices, perturbation_percentage)
 
+# Print the Results ----
 # Printing the results
 for var, details in sensitivity_results_full.items():
     print(f"\n{var}:")  # Print the variable name with a newline before it
