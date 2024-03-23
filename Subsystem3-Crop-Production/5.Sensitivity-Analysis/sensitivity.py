@@ -75,8 +75,8 @@ optimized_x = np.array([197.3555162, 10000.04094, 6.06058071, 6.06481227,
                         524.0792289, 6.04250929, 6.03679917, 4.55245179,
                         2082.596513, 4423.625629, 52.0247252, 51.7242541])
 
-variables_of_interest_indices = [0, 1, 2, 3]
-perturbation_percentage = 0.1  # 10% perturbation
+variables_of_interest_indices = [16, 17, 18, 19]
+perturbation_percentage = 0.15  # 15% perturbation
 
 # Sensitivity Analysis ----
 def perform_sensitivity_analysis(optimized_x, variables_indices, perturbation_percentage):
